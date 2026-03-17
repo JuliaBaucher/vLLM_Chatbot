@@ -31,8 +31,6 @@
       --radius-sm: 10px;
 
       --maxw: 980px;
-      --header-h: 92px;
-
       --focus: 0 0 0 4px rgba(59,130,246,0.25);
     }
 
@@ -74,11 +72,11 @@
     .wrap{
       max-width: var(--maxw);
       margin: 0 auto;
-      padding: 18px 14px 28px;
-      min-height: 100%;
+      padding: 12px;
+      min-height: 100dvh;
       display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: 14px;
+      grid-template-rows: auto 1fr;
+      gap: 12px;
     }
 
     header{
@@ -91,7 +89,7 @@
       background: var(--surface);
       box-shadow: var(--shadow);
       border-radius: var(--radius-lg);
-      padding: 14px 14px;
+      padding: 12px;
     }
 
     .head{
@@ -104,6 +102,7 @@
     .title{
       display: grid;
       gap: 6px;
+      min-width: 0;
     }
 
     h1{
@@ -172,8 +171,8 @@
 
     main{
       display: grid;
-      gap: 14px;
-      min-height: calc(100vh - var(--header-h));
+      gap: 12px;
+      min-height: 0;
     }
 
     .card{
@@ -186,16 +185,18 @@
 
     .chat-card{
       display: grid;
-      grid-template-rows: auto 1fr auto;
-      min-height: 56vh;
+      grid-template-rows: auto minmax(0, 1fr) auto auto;
+      min-height: 0;
+      height: calc(100dvh - 120px);
+      max-height: calc(100dvh - 120px);
     }
 
     .chat-meta{
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 10px;
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--border);
       background: rgba(255,255,255,0.06);
     }
@@ -206,6 +207,7 @@
     .chat-meta .left{
       display: grid;
       gap: 3px;
+      min-width: 0;
     }
 
     .chat-meta .label{
@@ -247,14 +249,15 @@
     .chip:focus-visible{ outline: none; box-shadow: var(--focus), 0 12px 24px rgba(16,24,40,0.12); }
 
     .chat{
-      padding: 14px;
+      padding: 10px 12px;
       overflow: auto;
       scroll-behavior: smooth;
+      min-height: 0;
     }
 
     .msg{
       display: flex;
-      margin: 10px 0;
+      margin: 8px 0;
       gap: 0;
       width: 100%;
     }
@@ -356,7 +359,7 @@
 
     .composer{
       border-top: 1px solid var(--border);
-      padding: 12px 14px;
+      padding: 10px 12px;
       background: rgba(255,255,255,0.06);
     }
     [data-theme="dark"] .composer{
@@ -373,13 +376,14 @@
     .field{
       display: grid;
       gap: 8px;
+      min-width: 0;
     }
 
     textarea{
       width: 100%;
       resize: none;
       min-height: 44px;
-      max-height: 160px;
+      max-height: 120px;
       padding: 10px 12px;
       border-radius: var(--radius-md);
       border: 1px solid var(--border);
@@ -417,17 +421,13 @@
       user-select: none;
     }
 
-    footer{
-      padding: 0;
-    }
-
     details{
       border-top: 1px solid var(--border);
     }
 
     summary{
       cursor: pointer;
-      padding: 12px 14px;
+      padding: 10px 12px;
       list-style: none;
       user-select: none;
       font-weight: 800;
@@ -445,7 +445,7 @@
     summary::-webkit-details-marker{ display:none; }
 
     .details-body{
-      padding: 12px 14px 14px;
+      padding: 10px 12px 12px;
       color: var(--muted);
       font-size: 13px;
       display: grid;
@@ -469,8 +469,8 @@
 
     .toast{
       position: fixed;
-      inset: auto 14px 14px auto;
-      max-width: min(360px, calc(100vw - 28px));
+      inset: auto 12px 12px auto;
+      max-width: min(360px, calc(100vw - 24px));
       padding: 10px 12px;
       border-radius: 999px;
       border: 1px solid var(--border);
@@ -504,13 +504,91 @@
       border: 0 !important;
     }
 
-    @media (max-width: 640px){
-      header{ padding: 12px; }
-      .chat{ padding: 12px; }
-      .composer{ padding: 12px; }
-      .input-row{ grid-template-columns: 1fr; }
-      .controls{ justify-content: flex-start; }
-      .bubble{ max-width: 100%; width: 100%; }
+    @media (max-width: 768px){
+      .wrap{
+        padding: 8px;
+        gap: 8px;
+      }
+
+      header{
+        padding: 10px;
+      }
+
+      .head{
+        grid-template-columns: 1fr;
+      }
+
+      .controls{
+        justify-content: flex-start;
+      }
+
+      h1{
+        font-size: 16px;
+      }
+
+      .subtitle{
+        font-size: 12px;
+      }
+
+      .chat-card{
+        height: calc(100dvh - 96px);
+        max-height: calc(100dvh - 96px);
+      }
+
+      .chat-meta{
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .chat-meta .right{
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 2px;
+      }
+
+      .chip{
+        flex: 0 0 auto;
+      }
+
+      .input-row{
+        grid-template-columns: 1fr;
+      }
+
+      .bubble{
+        max-width: 100%;
+        width: 100%;
+      }
+
+      textarea{
+        max-height: 96px;
+      }
+
+      .helper{
+        font-size: 11px;
+      }
+
+      .btn{
+        padding: 10px 12px;
+      }
+    }
+
+    @media (max-width: 480px){
+      .chat{
+        padding: 8px 10px;
+      }
+
+      .composer,
+      .chat-meta,
+      summary,
+      .details-body{
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .bubble .text{
+        font-size: 13px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -593,8 +671,8 @@
         </div>
 
         <details>
-          <summary aria-label="Architecture description">
-            <span>Architecture</span>
+          <summary aria-label="Implementation overview">
+            <span>Implementation Overview</span>
             <span aria-hidden="true">▾</span>
           </summary>
           <div class="details-body">
@@ -603,16 +681,6 @@
               The backend receives the message, applies the system prompt and application logic, and calls a local vLLM server through its OpenAI-compatible API.
               vLLM then runs the open-source model and returns the generated response to the backend, which sends a JSON reply back to the browser.
             </div>
-            <div class="mono" aria-label="Backend endpoint (for reference)">POST /chat → your backend API endpoint here</div>
-          </div>
-        </details>
-
-        <details>
-          <summary aria-label="Implementation notes">
-            <span>Implementation Notes</span>
-            <span aria-hidden="true">▾</span>
-          </summary>
-          <div class="details-body">
             <div>• Frontend: static HTML/CSS/JS chat UI running in the browser</div>
             <div>• Backend: receives user messages and calls the model server</div>
             <div>• Model server: vLLM exposes an OpenAI-compatible local API</div>
@@ -620,26 +688,11 @@
             <div>• This prototype is stateless unless conversation history is added in backend code</div>
             <div>• localStorage is used only for browser-side chat persistence</div>
             <div>• The frontend renders messages as plain text to reduce XSS risk</div>
+            <div class="mono" aria-label="Backend endpoint (for reference)">POST /chat → your backend API endpoint here</div>
           </div>
         </details>
       </section>
     </main>
-
-    <footer class="card" aria-label="Footer">
-      <details open>
-        <summary aria-label="About this page">
-          <span>About</span>
-          <span aria-hidden="true">▾</span>
-        </summary>
-        <div class="details-body">
-          <div>
-            This is a simple vLLM chatbot interface built with vanilla HTML, CSS, and JavaScript. It sends user questions to a backend API using <span class="mono">fetch()</span>,
-            and the backend communicates with a vLLM model server to generate responses. Messages are rendered as plain text to reduce XSS risk.
-          </div>
-          <div class="mono" aria-label="Storage note">Optional persistence: last chat is stored locally in your browser (localStorage).</div>
-        </div>
-      </details>
-    </footer>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
@@ -653,13 +706,11 @@
     (function () {
       "use strict";
 
-      // === Config ===
       const API_ENDPOINT = "https://xmy6xfiku4.execute-api.eu-central-1.amazonaws.com/prod/chat";
       const STORAGE_KEY = "vllm_impl_chat_v1";
       const THEME_KEY = "vllm_impl_theme_v1";
       const MAX_CHARS = 4000;
 
-      // === DOM ===
       const chatEl = document.getElementById("chat");
       const inputEl = document.getElementById("input");
       const sendBtn = document.getElementById("sendBtn");
@@ -672,7 +723,6 @@
       const themeToggle = document.getElementById("themeToggle");
       const welcomeText = document.getElementById("welcomeText");
 
-      // === State (client-side) ===
       const state = {
         messages: [],
         pending: false,
@@ -681,7 +731,6 @@
         theme: "system",
       };
 
-      // === Utilities ===
       function nowTimeLabel() {
         const d = new Date();
         return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -710,7 +759,7 @@
 
       function autosizeTextarea() {
         inputEl.style.height = "auto";
-        const maxH = 160;
+        const maxH = window.innerWidth <= 768 ? 96 : 120;
         const next = clamp(inputEl.scrollHeight, 44, maxH);
         inputEl.style.height = next + "px";
       }
@@ -1085,7 +1134,6 @@
         );
       }
 
-      // === Events ===
       inputEl.addEventListener("input", () => {
         autosizeTextarea();
         updateCounter();
@@ -1105,6 +1153,8 @@
 
       themeToggle.addEventListener("click", cycleTheme);
 
+      window.addEventListener("resize", autosizeTextarea);
+
       if (window.matchMedia) {
         const mq = window.matchMedia("(prefers-color-scheme: dark)");
         const onChange = () => {
@@ -1114,7 +1164,6 @@
         else if (typeof mq.addListener === "function") mq.addListener(onChange);
       }
 
-      // === Init ===
       (function init() {
         initWelcome();
 
